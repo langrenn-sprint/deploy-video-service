@@ -1,11 +1,11 @@
 # deploy
 
-Runtime repository for langrenn-sprint som starter opp alle tjenester, frontend og backend
+Deploy a service to collect photos and information from a video camera.
 
 ## Slik går du fram for å kjøre dette lokalt eller på en skytjeneste
 
-1. Sette opp virtuell server - ubuntu
-2. Networking: Open up port 8080 and 8090 for incoming traffic from any * incoming source.
+1. Sette opp virtuell server - ubuntu. Dette bør være en server med GPU for å kjøre real-time video analyse
+2. Networking: Open up port 8080 for incoming traffic from any * incoming source.
 3. Tildele dns navn - eks: ragdesprinten.norwayeast.cloudapp.azure.com
 
 4. kommandoer for å innstallere containere (kan trolig optimaliseres - trenger ikke alt dette)
@@ -79,47 +79,15 @@ docker network prune
 Du må sette opp ei .env fil med miljøvariable. Eksempel:
 
 ```Shell
-JWT_SECRET=secret
+LOGGING_LEVEL=INFO
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=password
-GOOGLE_APPLICATION_CREDENTIALS="application_default_credentials.json"
 DB_USER=admin
 DB_PASSWORD=password
-EVENTS_HOST_SERVER=localhost
-EVENTS_HOST_PORT=8082
-ERROR_FILE=error.log
-PHOTOS_HOST_SERVER=localhost
-PHOTOS_HOST_PORT=8092
-FERNET_KEY=23EHUWpP_tpleR_RjuX5hxndWqyc0vO-cjNUMSzbjN4=
-GOOGLE_OAUTH_CLIENT_ID=826356442895-g21vdoamuakjgrdparu4nem2hr930bnn.apps.googleusercontent.com
+JWT_SECRET=secret
 JWT_EXP_DELTA_SECONDS=3600
-LOGGING_LEVEL=DEBUG
-RACE_HOST_SERVER=localhost
-RACE_SERVICE_PORT=8088
-USERS_HOST_SERVER=localhost
-USERS_HOST_PORT=8086
-USER_SERVICE_HOST=localhost
-USER_SERVICE_PORT=8086
-GOOGLE_PUBSUB_NUM_MESSAGES=20
-RACE_DURATION_ESTIMATE=300
-RACE_TIME_DEVIATION_ALLOWED=600
+PHOTOS_FILE_PATH=tests/files
+VIDEO_URL=tests/files/2023SkiMaal.mp4
+GLOBAL_SETTINGS_FILE=vision-ai-service/config/global_settings.json
+VIDEO_STATUS_FILE=vision-ai-service/config/video_status.json
 ```
-
-## Backup
-
-I Azure VM, stoppe containere i deploy-folder
-Rekursivt endre ownership på data-folder
-
-```Shell
-docker-compose stop
-sudo chown azureuser:azureuser data -R
-```
-
-På local pc, opprette backup-folder i deploy-folder
-På lokal pc, i home-folder, køyre scp
-
-```Shell
-mkdir backup_skagen
-scp -i key.pem -r azureuser@<domain/ip>:/home/azureuser/github/deploy/data backup_skagen
-
-I deploy-folder, starte containere på nytt eller lokalt (docker-compose up -d )
