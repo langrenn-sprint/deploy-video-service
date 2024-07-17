@@ -97,13 +97,9 @@ GOOGLE_PUBSUB_SUBSCRIPTION_ID=langrenn-sprint-sub
 GOOGLE_STORAGE_BUCKET=langrenn-sprint
 GOOGLE_STORAGE_SERVER=https://storage.googleapis.com
 GOOGLE_OAUTH_CLIENT_ID=12345My-ClientId12345.apps.googleusercontent.com
-SERVICEBUS_NAMESPACE_CONNECTION_STR=<connection string>
+SERVICEBUS_NAMESPACE_CONNECTION_STR=connection_string
 JWT_EXP_DELTA_SECONDS=3600
 LOGGING_LEVEL=INFO
 USERS_HOST_SERVER=localhost
 USERS_HOST_PORT=8086
-PHOTOS_FILE_PATH=files
-VIDEO_URL=https://harnaes.no/maalfoto/2023SkiMaal.mp4
-GLOBAL_SETTINGS_FILE=global_settings.json
-VIDEO_STATUS_FILE=video_status.json
 ```

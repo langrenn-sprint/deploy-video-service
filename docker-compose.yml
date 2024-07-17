@@ -15,7 +15,6 @@ services:
       - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
       - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}
       - GOOGLE_PUBSUB_NUM_MESSAGES=${GOOGLE_PUBSUB_NUM_MESSAGES}
-      - GOOGLE_PUBSUB_PROJECT_ID==${GOOGLE_PUBSUB_PROJECT_ID}
       - GOOGLE_PUBSUB_TOPIC_ID==${GOOGLE_PUBSUB_TOPIC_ID}
       - GOOGLE_PUBSUB_SUBSCRIPTION_ID==${GOOGLE_PUBSUB_SUBSCRIPTION_ID}
       - GOOGLE_STORAGE_BUCKET==${GOOGLE_STORAGE_BUCKET}
@@ -42,31 +41,57 @@ services:
         source: error.log
         target: /app/error.log
     depends_on:
-      - "event-service"
-      - "user-service"
-      - "mongodb"
+      - event-service
+      - photo-service
+      - competition-format-service
+      - user-service
+      - mongodb
+  photo-service:
+    image: ghcr.io/langrenn-sprint/photo-service:latest
+    ports:
+      - 8092:8080
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - USERS_HOST_SERVER=user-service
+      - USERS_HOST_PORT=8080
+      - GOOGLE_PHOTO_SERVER=https://photoslibrary.googleapis.com/v1
+      - GOOGLE_PHOTO_SCOPE=https://www.googleapis.com/auth/photoslibrary.readonly
+      - GOOGLE_PHOTO_CREDENTIALS_FILE=/home/heming/github/photo_api_credentials.json
+      - SERVICEBUS_NAMESPACE_CONNECTION_STR=${SERVICEBUS_NAMESPACE_CONNECTION_STR}
+      - LOGGING_LEVEL=${LOGGING_LEVEL}
+      - DB_HOST=mongodb
+      - DB_PORT=27017
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - user-service
+      - mongodb
   vision-ai-service:
     build: .
     image: ghcr.io/langrenn-sprint/vision-ai-service:latest
     environment:
       - HOST_PORT=8080
       - LOGGING_LEVEL=${LOGGING_LEVEL}
-      - GLOBAL_SETTINGS_FILE=${GLOBAL_SETTINGS_FILE}
-      - VIDEO_STATUS_FILE=${VIDEO_STATUS_FILE}
-      - PHOTOS_FILE_PATH=${PHOTOS_FILE_PATH}
     volumes:
       - type: bind
-        source: ${GLOBAL_SETTINGS_FILE}
-        target: /app/${GLOBAL_SETTINGS_FILE}
+        source: global_settings.json
+        target: /app/vision-ai-service/config/global_settings.json
       - type: bind
-        source: ${VIDEO_STATUS_FILE}
-        target: /app/${VIDEO_STATUS_FILE}
+        source: files/video_status.json
+        target: /app/files/video_status.json
       - type: bind
-        source: ${PHOTOS_FILE_PATH}
-        target: /app/${PHOTOS_FILE_PATH}
+        source: files
+        target: /app/files
       - type: bind
         source: error.log
         target: /app/error.log
+    depends_on:
+      - event-service
+      - photo-service
+      - user-service
+      - mongodb
   event-service:
     image: ghcr.io/langrenn-sprint/event-service:latest
     ports:
@@ -85,8 +110,8 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
-      - "user-service"
-      - "mongodb"
+      - user-service
+      - mongodb
   competition-format-service:
     image: ghcr.io/langrenn-sprint/competition-format-service:latest
     ports:
@@ -119,7 +144,7 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
-      - "mongodb"
+      - mongodb
   mongodb:
     image: mongo:latest
     ports:
