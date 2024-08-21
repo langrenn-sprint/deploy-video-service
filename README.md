@@ -5,7 +5,7 @@ Deploy a service to collect photos and information from a video camera.
 ## Slik går du fram for å kjøre dette lokalt eller på en skytjeneste
 
 1. Sette opp virtuell server - ubuntu. Dette bør være en server med GPU for å kjøre real-time video analyse
-   Eksempel fra Azure VM: Ubuntu 22.04 LTS, size Standard_NV4as_v4.
+   Eksempel: AZURE DSVM for PyTorch
 3. Networking: Open up port 8080 for incoming traffic from any * incoming source.
 4. Tildele dns navn - eks: ragdesprinten.norwayeast.cloudapp.azure.com
 
