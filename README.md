@@ -12,6 +12,9 @@ Deploy a service to collect photos and information from a video camera.
 5. kommandoer for å innstallere containere (kan trolig optimaliseres - trenger ikke alt dette)
 
 ```Shell
+conda create -n pytorch_env python=3.8 pytorch torchvision torchaudio cpuonly -c pytorch
+conda activate pytorch_env
+
 sudo apt-get update
 sudo apt-get install python-is-python3
 curl -sSL https://install.python-poetry.org | python3 -
@@ -26,6 +29,7 @@ sudo apt update
 sudo apt -y install cuda-toolkit-12-5
 sudo reboot # reboot
 nvidia-smi # to verify
+
 sudo apt install python3-pip
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 sudo apt install docker-compose
