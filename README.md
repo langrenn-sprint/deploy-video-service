@@ -5,16 +5,29 @@ Deploy a service to collect photos and information from a video camera.
 ## Slik går du fram for å kjøre dette lokalt eller på en skytjeneste
 
 1. Sette opp virtuell server - ubuntu. Dette bør være en server med GPU for å kjøre real-time video analyse
-2. Networking: Open up port 8080 for incoming traffic from any * incoming source.
-3. Tildele dns navn - eks: ragdesprinten.norwayeast.cloudapp.azure.com
+   Eksempel fra Azure VM: Ubuntu 22.04 LTS, size Standard_NV4as_v4.
+3. Networking: Open up port 8080 for incoming traffic from any * incoming source.
+4. Tildele dns navn - eks: ragdesprinten.norwayeast.cloudapp.azure.com
 
-4. kommandoer for å innstallere containere (kan trolig optimaliseres - trenger ikke alt dette)
+5. kommandoer for å innstallere containere (kan trolig optimaliseres - trenger ikke alt dette)
 
 ```Shell
 sudo apt-get update
 sudo apt-get install python-is-python3
 curl -sSL https://install.python-poetry.org | python3 -
 # log out and back in
+# now enable GPUs (MÅ OPPDATERES), see https://learn.microsoft.com/en-us/azure/virtual-machines/linux/n-series-driver-setup?wt.mc_id=searchAPI_azureportal_inproduct_rmskilling&sessionId=fb6f6b0c20e84c30b497140fce086e48
+sudo apt update && sudo apt install -y ubuntu-drivers-common
+sudo ubuntu-drivers install
+# reboot
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
+sudo apt install -y ./cuda-keyring_1.1-1_all.deb
+sudo apt update
+sudo apt -y install cuda-toolkit-12-5
+sudo reboot # reboot
+nvidia-smi # to verify
+sudo apt install python3-pip
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 sudo apt install docker-compose
 sudo git clone https://github.com/langrenn-sprint/deploy-video-service.git
 # copy .env file og secrets (inkl GOOGLE_APPLICATION_CREDENTIALS)
@@ -32,7 +45,8 @@ Set upp application default credentials: https://cloud.google.com/docs/authentic
 
 ```Shell kommandoer hvis du skal laste filen opp på en Azure virtuell server
 ssh -i /home/heming/github/sprint-ubuntu_key.pem azureuser@sprint.northeurope.cloudapp.azure.com
-scp -i sprint-langrenn_key.pem -r application_default_credentials.json azureuser@20.251.168.187:/home/azureuser/github/deploy/.
+scp -i key.pem -r application_default_credentials.json azureuser@20.251.168.187:/home/azureuser/github/deploy-video-service/.
+Tips: chmod 700 på nøkkelen
 ```
 
 ## Starte opp containere
@@ -89,7 +103,7 @@ EVENTS_HOST_PORT=8082
 PHOTOS_HOST_SERVER=localhost
 PHOTOS_HOST_PORT=8092
 FERNET_KEY=23EHUWpP_MyKey_MyKeyhxndWqyc0vO-MyKeySMyKey=
-GOOGLE_APPLICATION_CREDENTIALS=/home/heming/github/secrets/application_default_credentials.json
+GOOGLE_APPLICATION_CREDENTIALS=/home/azureuser/github/deploy-video-service/application_default_credentials.json
 GOOGLE_CLOUD_PROJECT=sigma-celerity-257719
 GOOGLE_PUBSUB_NUM_MESSAGES=1
 GOOGLE_PUBSUB_TOPIC_ID=langrenn-sprint
