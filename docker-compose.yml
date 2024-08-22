@@ -1,7 +1,6 @@
 version: '3'
 services:
   photo-service-gui:
-    build: .
     image: ghcr.io/langrenn-sprint/photo-service-gui:latest
     ports:
       - 8080:8080
@@ -61,7 +60,6 @@ services:
       - user-service
       - mongodb
   vision-ai-service:
-    build: .
     image: ghcr.io/langrenn-sprint/vision-ai-service:latest
     environment:
       - HOST_PORT=8080
