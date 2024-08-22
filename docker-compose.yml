@@ -28,18 +28,10 @@ services:
       - USERS_HOST_SERVER=user-service
       - USERS_HOST_PORT=8080
     volumes:
-      - type: bind
-        source: ./global_settings.json
-        target: /app/photo_service_gui/config/global_settings.json
-      - type: bind
-        source: ./files/video_status.json
-        target: /app/photo_service_gui/files/video_status.json
-      - type: bind
-        source: ./files
-        target: /app/photo_service_gui/files
-      - type: bind
-        source: ./error.log
-        target: /app/error.log
+      - ./global_settings.json:/app/photo_service_gui/config/global_settings.json
+      - ./files/video_status.json:/app/photo_service_gui/files/video_status.json
+      - ./files:/app/photo_service_gui/files
+      - ./error.log:/app/error.log
     depends_on:
       - event-service
       - photo-service
@@ -75,18 +67,10 @@ services:
       - HOST_PORT=8080
       - LOGGING_LEVEL=${LOGGING_LEVEL}
     volumes:
-      - type: bind
-        source: ./global_settings.json
-        target: /app/photo_service_gui/config/global_settings.json
-      - type: bind
-        source: ./files/video_status.json
-        target: /app/photo_service_gui/files/video_status.json
-      - type: bind
-        source: ./files
-        target: /app/photo_service_gui/files
-      - type: bind
-        source: ./error.log
-        target: /app/error.log
+      - ./global_settings.json:/app/photo_service_gui/config/global_settings.json
+      - ./files/video_status.json:/app/photo_service_gui/files/video_status.json
+      - ./files:/app/photo_service_gui/files
+      - ./error.log:/app/error.log
     depends_on:
       - event-service
       - photo-service
