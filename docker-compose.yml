@@ -30,9 +30,8 @@ services:
       - USERS_HOST_PORT=8080
     volumes:
       - ./global_settings.json:/app/photo_service_gui/config/global_settings.json
-      - ./files/video_status.json:/app/photo_service_gui/files/video_status.json
-      - ./files:/app/photo_service_gui/files
       - ./error.log:/app/error.log
+      - shared-photos:/app/photo_service_gui/files
     depends_on:
       - event-service
       - photo-service
@@ -66,11 +65,18 @@ services:
     environment:
       - HOST_PORT=8080
       - LOGGING_LEVEL=${LOGGING_LEVEL}
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - EVENTS_HOST_SERVER=event-service
+      - EVENTS_HOST_PORT=8080
+      - PHOTOS_HOST_SERVER=photo-service
+      - PHOTOS_HOST_PORT=8080
+      - USERS_HOST_SERVER=user-service
+      - USERS_HOST_PORT=8080
     volumes:
       - ./global_settings.json:/app/photo_service_gui/config/global_settings.json
-      - ./files/video_status.json:/app/photo_service_gui/files/video_status.json
-      - ./files:/app/photo_service_gui/files
       - ./error.log:/app/error.log
+      - shared-photos:/app/files
     depends_on:
       - event-service
       - photo-service
@@ -138,3 +144,6 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
+volumes:
+  shared-photos:
+    driver: local
