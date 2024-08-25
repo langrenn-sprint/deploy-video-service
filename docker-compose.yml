@@ -29,9 +29,15 @@ services:
       - USERS_HOST_SERVER=user-service
       - USERS_HOST_PORT=8080
     volumes:
-      - ./global_settings.json:/app/photo_service_gui/config/global_settings.json
-      - ./error.log:/app/error.log
-      - shared-photos:/app/photo_service_gui/files
+      - type: bind
+        source: global_settings.json
+        target: /app/photo_service_gui/config/global_settings.json
+      - type: bind
+        source: files
+        target: /app/photo_service_gui/files
+      - type: bind
+        source: error.log
+        target: /app/error.log
     depends_on:
       - event-service
       - photo-service
@@ -74,9 +80,15 @@ services:
       - USERS_HOST_SERVER=user-service
       - USERS_HOST_PORT=8080
     volumes:
-      - ./global_settings.json:/app/photo_service_gui/config/global_settings.json
-      - ./error.log:/app/error.log
-      - shared-photos:/app/files
+      - type: bind
+        source: vision_ai_service/config/global_settings.json
+        target: /app/config/global_settings.json
+      - type: bind
+        source: vision_ai_service/files
+        target: /app/files
+      - type: bind
+        source: error.log
+        target: /app/error.log
     depends_on:
       - event-service
       - photo-service
