@@ -42,6 +42,8 @@ Når du har logga inn på serveren, gå til folderen der docker-compose filen li
 
 ```Shell
 docker-compose pull && docker-compose up -d # Henter siste versjon av containere og starter dem
+# evt starte opp uten video-service
+docker-compose up photo-service-gui event-service photo-service competition-format-service user-service mongodb
 ```
 
 ## Monitorere logger
@@ -71,7 +73,6 @@ docker-compose down
 ```Shell
 docker image prune -a
 docker rm -f $(sudo docker ps -a -q)
-docker-compose rm result-service-gui
 docker network prune
 ```
 
