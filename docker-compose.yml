@@ -38,6 +38,9 @@ services:
       - type: bind
         source: ./error.log
         target: /app/error.log
+      - type: bind
+        source: ./application_default_credentials.json
+        target: /app/application_default_credentials.json
     depends_on:
       - event-service
       - photo-service
