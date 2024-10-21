@@ -12,8 +12,13 @@ Deploy a service to collect photos and information from a video camera.
 4. kommandoer for å innstallere containere (kan trolig optimaliseres - trenger ikke alt dette)
 
 ```Shell
-sudo apt install python3-pip
-pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+sudo apt update
+
+## conda installasjon
+curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh
+## restart shell
+conda install pytorch torchvision torchaudio cpuonly -c pytorch
 
 sudo apt install docker-compose
 sudo git clone https://github.com/langrenn-sprint/deploy-video-service.git

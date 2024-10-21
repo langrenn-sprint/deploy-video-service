@@ -33,7 +33,7 @@ services:
         source: ./global_settings.json
         target: /app/photo_service_gui/config/global_settings.json
       - type: bind
-        source: ./files
+        source: /home/heming/github/vision-ai-service/vision_ai_service/files
         target: /app/photo_service_gui/files
       - type: bind
         source: ./error.log
@@ -84,13 +84,13 @@ services:
       - USERS_HOST_PORT=8080
     volumes:
       - type: bind
-        source: vision_ai_service/config/global_settings.json
+        source: ./global_settings.json
         target: /app/config/global_settings.json
       - type: bind
-        source: vision_ai_service/files
-        target: /app/files
+        source: /home/heming/github/vision-ai-service/vision_ai_service/files
+        target: /app/vision_ai_service/files
       - type: bind
-        source: error.log
+        source: ./error.log
         target: /app/error.log
     depends_on:
       - event-service
