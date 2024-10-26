@@ -45,6 +45,9 @@ Tips: chmod 700 på nøkkelen
 
 Når du har logga inn på serveren, gå til folderen der docker-compose filen ligger og kjør følgende kommandoer:
 
+```Filhåndtering - lage bind-mounts som stemmer med referansene i docker-compose filen
+mkdir files
+
 ```Shell
 docker-compose pull && docker-compose up -d # Henter siste versjon av containere og starter dem
 # evt starte opp uten video-service
