@@ -32,7 +32,7 @@ services:
         source: ./global_settings.json
         target: /app/photo_service_gui/config/global_settings.json
       - type: bind
-        source: /home/heming/github/vision-ai-service/vision_ai_service/files
+        source: ${LOCAL_PHOTO_DIRECTORY}
         target: /app/photo_service_gui/files
       - type: bind
         source: ./error.log
@@ -86,7 +86,7 @@ services:
         source: ./global_settings.json
         target: /app/config/global_settings.json
       - type: bind
-        source: /home/heming/github/vision-ai-service/vision_ai_service/files
+        source: ${LOCAL_PHOTO_DIRECTORY}
         target: /app/vision_ai_service/files
       - type: bind
         source: ./error.log
@@ -158,6 +158,3 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
-volumes:
-  shared-photos:
-    driver: local

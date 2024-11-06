@@ -112,4 +112,6 @@ JWT_EXP_DELTA_SECONDS=3600
 LOGGING_LEVEL=INFO
 USERS_HOST_SERVER=localhost
 USERS_HOST_PORT=8086
+VIDEO_URL=https://harnaes.no/maalfoto/2023SkiMaal.mp4
+LOCAL_PHOTO_DIRECTORY=/home/github/deploy-video-service/files
 ```
