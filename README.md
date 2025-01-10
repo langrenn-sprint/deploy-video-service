@@ -99,7 +99,6 @@ EVENTS_HOST_PORT=8082
 PHOTOS_HOST_SERVER=localhost
 PHOTOS_HOST_PORT=8092
 FERNET_KEY=23EHUWpP_MyKey_MyKeyhxndWqyc0vO-MyKeySMyKey=
-GOOGLE_APPLICATION_CREDENTIALS=/home/azureuser/deploy-video-service/application_default_credentials.json
 GOOGLE_CLOUD_PROJECT=sigma-celerity-257719
 GOOGLE_PUBSUB_NUM_MESSAGES=1
 GOOGLE_PUBSUB_TOPIC_ID=langrenn-sprint
