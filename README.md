@@ -1,15 +1,14 @@
-# deploy
+# deploy-video-service
 
 Deploy a service to collect photos and information from a video camera.
 
 ## Slik går du fram for å kjøre dette lokalt eller på en skytjeneste
 
 1. Sette opp virtuell server. Dette bør være en server med GPU for å kjøre real-time video analyse
-   # Eksempel: Image: Microsoft DSVM Ubuntu Size: Standard NV8as v4 (8 vcpus, 28 GiB memory)
   
-3. Networking: Open up port 8080 for incoming traffic from any * incoming source.
+2. Networking: Open up port 8080 for incoming traffic from any * incoming source.
 
-4. kommandoer for å innstallere containere (kan trolig optimaliseres - trenger ikke alt dette)
+3. kommandoer for å innstallere containere (kan trolig optimaliseres - trenger ikke alt dette)
 
 ```Shell
 sudo apt update
